@@ -1,4 +1,4 @@
-```markdown
+
 <p align="center">
   <img src="https://github.com/alielali22/aidly-project/blob/main/logo_aidly.png?raw=true" width="280" alt="Aidly Logo">
 </p>
