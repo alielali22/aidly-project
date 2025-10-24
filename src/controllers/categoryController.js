@@ -1,0 +1,50 @@
+import {
+  listCategories,
+  getCategory,
+  createCategory,
+  updateCategory,
+  deleteCategory
+} from '../services/categoryService.js';
+import { CreateCategoryDto, UpdateCategoryDto } from '../domain/dto/category.dto.js';
+
+export async function index(req, res, next) {
+  try {
+    const limit = Number(req.query.limit) || 50;
+    const offset = Number(req.query.offset) || 0;
+    const rows = await listCategories({ limit, offset });
+    res.json(rows);
+  } catch (e) { next(e); }
+}
+
+export async function show(req, res, next) {
+  try {
+    const row = await getCategory(req.params.id);
+    if (!row) return res.status(404).json({ error: 'Category not found' });
+    res.json(row);
+  } catch (e) { next(e); }
+}
+
+export async function store(req, res, next) {
+  try {
+    const { dto, errors } = CreateCategoryDto(req.body);
+    if (errors.length) return res.status(400).json({ errors });
+    const row = await createCategory(dto);
+    res.status(201).json(row);
+  } catch (e) { next(e); }
+}
+
+export async function updateOne(req, res, next) {
+  try {
+    const { dto, errors } = UpdateCategoryDto(req.body);
+    if (errors.length) return res.status(400).json({ errors });
+    const row = await updateCategory(req.params.id, dto);
+    res.json(row);
+  } catch (e) { next(e); }
+}
+
+export async function destroy(req, res, next) {
+  try {
+    const result = await deleteCategory(req.params.id);
+    res.json(result);
+  } catch (e) { next(e); }
+}
