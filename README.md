@@ -14,7 +14,7 @@
   <img src="https://img.shields.io/badge/Node.js-18%2B-green?logo=node.js">
   <img src="https://img.shields.io/badge/Express.js-4.x-lightgrey?logo=express">
   <img src="https://img.shields.io/badge/PostgreSQL-Database-blue?logo=postgresql">
-  <img src="https://img.shields.io/badge/License-MIT-yellow?logo=open-source-initiative">
+  
 </p>
 
 ---
@@ -291,5 +291,5 @@ Follow these steps to add improvements:
 <p align="center">
   Made with ❤️ by <a href="https://github.com/alielali22">Ali El Ali</a>
 </p>
-```
+
 
