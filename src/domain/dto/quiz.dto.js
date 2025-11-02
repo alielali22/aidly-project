@@ -1,0 +1,1 @@
+export class CreateQuizDto { constructor(articleId, question, optionA, optionB, optionC, optionD, correctAnswer){ Object.assign(this, {articleId, question, optionA, optionB, optionC, optionD, correctAnswer}); } }

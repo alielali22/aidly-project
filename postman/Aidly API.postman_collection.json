@@ -1,0 +1,678 @@
+{
+	"info": {
+		"_postman_id": "ef294cbd-eb63-4edc-9c88-935072d5b3c5",
+		"name": "Aidly API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48912998",
+		"_collection_link": "https://aliiskandar862-7782137.postman.co/workspace/Ali-Iskandar's-Workspace~707354c1-3a5e-4280-8658-44f184b319f1/collection/48912998-ef294cbd-eb63-4edc-9c88-935072d5b3c5?action=share&source=collection_link&creator=48912998"
+	},
+	"item": [
+		{
+			"name": "1- Health",
+			"item": [
+				{
+					"name": "Health",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2-Auth",
+			"item": [
+				{
+					"name": "Auth – Register (Learner)",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Auth – Login (Admin)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"200 OK\", () => pm.response.to.have.status(200));\r",
+									"const json = pm.response.json();\r",
+									"pm.environment.set(\"token\", json.token);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"admiaans@example.com\",\r\n  \"password\": \"adminpass123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Learner (Save token)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();\r",
+									"pm.environment.set(\"token\", json.token);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"email\": \"john@example.com\", \"password\": \"learner123\" }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /auth/me (Check Current User)",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3-Categories",
+			"item": [
+				{
+					"name": "Category (Admin-only)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const c = pm.response.json();\r",
+									"pm.environment.set(\"categoryId\", c.id);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"First Aid Basics\",\r\n  \"description\": \"General first aid guidance and procedures\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categories – List",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category by ID (Public)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "Get Category by ID (Public)",
+							"host": [
+								"Get Category by ID (Public)"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category (Admin)",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Delete category",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4-Articles",
+			"item": [
+				{
+					"name": "Create Article (Admin/Expert)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const a = pm.response.json();\r",
+									"pm.environment.set(\"articleId\", a.id);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Primary Survey ABC\",\r\n  \"content\": \"Airway, Breathing, Circulation—initial steps...\",\r\n  \"categoryId\": 1,\r\n  \"readTimeMinutes\": 5,\r\n  \"mediaUrl\": \"https://example.com/abc.png\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/articles",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"articles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Articles (Public)",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Article by ID (Public",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Update Article (Admin/Expert)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"readTimeMinutes\": 6 }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/articles/{{articleId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"articles",
+								"{{articleId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Article (Admin)",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "5-Quizes",
+			"item": [
+				{
+					"name": "Add at least one question (Admin/Expert)",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Create quiz (Admin/Expert)",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Add Question (Admin/Expert)",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "List Quizzes for Article (Public)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/quizzes/article/{{articleId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"quizzes",
+								"article",
+								"{{articleId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Quiz (with questions) (Public)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/quizzes/{{quizId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"quizzes",
+								"{{quizId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Start Attempt (Learner)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const at = pm.response.json();\r",
+									"pm.environment.set(\"attemptId\", at.id);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/quizzes/{{quizId}}/attempts",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"quizzes",
+								"{{quizId}}",
+								"attempts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Submit Attempt (Learner)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"answers\": [\r\n    { \"questionId\": 1, \"optionId\": 1 }\r\n  ],\r\n  \"timeTakenSeconds\": 45\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/quizzes/{{quizId}}/attempts/{{attemptId}}/submit",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"quizzes",
+								"{{quizId}}",
+								"attempts",
+								"{{attemptId}}",
+								"submit"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "6-Progress",
+			"item": [
+				{
+					"name": "Upsert Progress (Learner)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"articleId\": {{articleId}}, \"status\": \"In Progress\", \"percentRead\": 80 }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/progress",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"progress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "My Progress (Learner)",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "7-Feedback",
+			"item": [
+				{
+					"name": "Create Feedback (Learner)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const f = pm.response.json();\r",
+									"pm.environment.set(\"feedbackId\", f.id);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"articleId\": {{articleId}}, \"comment\": \"Very clear!\", \"rating\": 5 }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/feedback",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"feedback"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Moderate Feedback (Admin/Expert)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"isVisible\": false }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/feedback/{{feedbackId}}/moderate",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"feedback",
+								"{{feedbackId}}",
+								"moderate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Feedback for Article",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Scores",
+			"item": [
+				{
+					"name": "My Scores (Learner)",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Manual Score (Optional)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"quizId\": {{quizId}}, \"score\": 1, \"total\": 1, \"timeTakenSeconds\": 30 }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/scores",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"scores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit an existing score",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Add at least one question (Admin/Expert)",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
