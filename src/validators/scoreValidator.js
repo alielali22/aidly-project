@@ -5,7 +5,7 @@ export const createScoreValidator = [
     .isInt({ min: 1 }).withMessage('quizId is required')
     .toInt(),
 
-  // Optional: let admins target a specific learner; defaults to self if omitted.
+  
   body('userId')
     .optional()
     .isInt({ min: 1 }).withMessage('userId must be a positive integer')

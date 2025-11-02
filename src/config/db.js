@@ -46,7 +46,6 @@ export async function withTransaction(run) {
 
 /**
  * Lightweight health check for /health
- * Fix: cast to int so pg returns a number, or coerce before compare.
  */
 export async function healthCheck() {
   try {
